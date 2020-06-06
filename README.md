@@ -4,7 +4,7 @@
 
 # **Hosting WordPress on AWS**
 
-### Version 2.0.2
+### Version 2.0.2 (gov edition)
 
 ara-wp-2.0.2
 
