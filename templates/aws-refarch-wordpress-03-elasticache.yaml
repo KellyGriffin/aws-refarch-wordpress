@@ -6,7 +6,7 @@ Description: Reference Architecture to host WordPress on AWS - Creates ElastiCac
 Metadata:
 
   Authors:
-    Description: Darryl Osborne (darrylo@amazon.com)
+    Description:  Darryl Osborne (darrylo@amazon.com), David McGovern (gov@amazon.com)
   License:
     Description: 'Copyright 2018 Amazon.com, Inc. and its affiliates. All Rights Reserved.
                   SPDX-License-Identifier: MIT-0'
@@ -34,31 +34,17 @@ Parameters:
 
   ElastiCacheNodeType:
     AllowedValues:
-      - cache.t2.micro
-      - cache.t2.small
-      - cache.t2.medium
+      - cache.t3.micro
+      - cache.t3.small
+      - cache.t3.medium
       - cache.m3.medium
-      - cache.m3.large
-      - cache.m3.xlarge
-      - cache.m3.2xlarge
-      - cache.m4.large
-      - cache.m4.xlarge
-      - cache.m4.2xlarge
-      - cache.m4.4xlarge
-      - cache.m4.10xlarge
-      - cache.r3.large
-      - cache.r3.xlarge
-      - cache.r3.2xlarge
-      - cache.r3.4xlarge
-      - cache.r3.8xlarge
-      - cache.r4.large
-      - cache.r4.xlarge
-      - cache.r4.2xlarge
-      - cache.r4.4xlarge
-      - cache.r4.8xlarge
-      - cache.r4.16xlarge
+      - cache.m5.large
+      - cache.m5.xlarge
+      - cache.m5.2xlarge
+      - cache.m5.4xlarge
+      - cache.m5.10xlarge
     ConstraintDescription: Must be a valid Amazon ElastiCache node type.
-    Default: cache.t2.medium
+    Default: cache.t3.medium
     Description: The Amazon ElastiCache cluster node type.
     Type: String
   ElastiCacheSecurityGroup:
@@ -105,7 +91,7 @@ Conditions:
     - !Condition NumberOfSubnets4
     - !Condition NumberOfSubnets5
     - !Condition NumberOfSubnets6
-  Subnet2: !Or
+  Subnet3: !Or
     - !Condition NumberOfSubnets3
     - !Condition NumberOfSubnets4
     - !Condition NumberOfSubnets5

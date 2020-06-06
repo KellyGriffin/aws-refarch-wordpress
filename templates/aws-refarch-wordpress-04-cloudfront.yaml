@@ -6,9 +6,9 @@ Description: Reference Architecture to host WordPress on AWS - Creates CloudFron
 Metadata:
 
   Authors:
-    Description: Darryl Osborne (darrylo@amazon.com)
+    Description:  Darryl Osborne (darrylo@amazon.com), David McGovern (gov@amazon.com)
   License:
-    Description: 'Copyright 2018 Amazon.com, Inc. and its affiliates. All Rights Reserved.
+    Description: 'Copyright 2020 Amazon.com, Inc. and its affiliates. All Rights Reserved.
                   SPDX-License-Identifier: MIT-0'
 
   AWS::CloudFormation::Interface:
@@ -128,7 +128,7 @@ Resources:
           Id: elb
           CustomOriginConfig:
             OriginProtocolPolicy: http-only
-        PriceClass: PriceClass_100
+        PriceClass: PriceClass_all
   CloudFrontDistributionSslCertificate:
     Type: AWS::CloudFront::Distribution
     Condition: SslCertificate
@@ -203,7 +203,7 @@ Resources:
           Id: elb
           CustomOriginConfig:
             OriginProtocolPolicy: https-only
-        PriceClass: PriceClass_100
+        PriceClass: PriceClass_all
         ViewerCertificate:
           AcmCertificateArn: !Ref CloudFrontAcmCertificate
           SslSupportMethod: sni-only

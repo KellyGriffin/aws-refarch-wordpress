@@ -6,9 +6,9 @@ Description: Reference Architecture to host WordPress on AWS - Creates EFS file 
 Metadata:
 
   Authors:
-    Description: Darryl Osborne (darrylo@amazon.com)
+    Description:  Darryl Osborne (darrylo@amazon.com), David McGovern (gov@amazon.com)
   License:
-    Description: 'Copyright 2018 Amazon.com, Inc. and its affiliates. All Rights Reserved.
+    Description: 'Copyright 2020 Amazon.com, Inc. and its affiliates. All Rights Reserved.
                   SPDX-License-Identifier: MIT-0'
 
   AWS::CloudFormation::Interface:
@@ -67,13 +67,13 @@ Parameters:
     Type: Number
   InstanceType:
     AllowedValues:
-      - t2.nano
-      - t2.micro
-      - t2.small
-      - t2.medium
-      - t2.large
-      - t2.xlarge
-      - t2.2xlarge
+      - t3a.nano
+      - t3a.micro
+      - t3a.small
+      - t3a.medium
+      - t3a.large
+      - t3a.xlarge
+      - t3a.2xlarge
       - m3.medium
       - m3.large
       - m3.xlarge
@@ -194,7 +194,7 @@ Conditions:
     - !Condition NumberOfSubnets4
     - !Condition NumberOfSubnets5
     - !Condition NumberOfSubnets6
-  Subnet2: !Or
+  Subnet3a: !Or
     - !Condition NumberOfSubnets3
     - !Condition NumberOfSubnets4
     - !Condition NumberOfSubnets5
@@ -214,33 +214,33 @@ Mappings:
 
   RegionMap:
     ap-northeast-1:
-      AMI: ami-2a69be4c
+      AMI: ami-0a1c2ec61571737db
     ap-northeast-2:
-      AMI: ami-9bec36f5
+      AMI: ami-1196317f
     ap-south-1:
-      AMI: ami-4fc58420
+      AMI: ami-d5c18eba
     ap-southeast-1:
-      AMI: ami-0797ea64
+      AMI: ami-0615132a0f36d24f4
     ap-southeast-2:
-      AMI: ami-8536d6e7
+      AMI: ami-088ff0e3bde7b3fdf
     ca-central-1:
-      AMI: ami-fd55ec99
+      AMI: ami-d29e25b6
     eu-central-1:
-      AMI: ami-c7ee5ca8
+      AMI: ami-bf2ba8d0
     eu-west-1:
-      AMI: ami-acd005d5
+      AMI: ami-1a962263
     eu-west-2:
-      AMI: ami-1a7f6d7e
+      AMI: ami-e7d6c983
     sa-east-1:
-      AMI: ami-f1344b9d
+      AMI: ami-286f2a44
     us-east-1:
-      AMI: ami-8c1be5f6
+      AMI: ami-55ef662f
     us-east-2:
-      AMI: ami-c5062ba0
+      AMI: ami-15e9c770
     us-west-1:
-      AMI: ami-02eada62
+      AMI: ami-a51f27c5
     us-west-2:
-      AMI: ami-e689729e
+      AMI: ami-bf4193c7
 
 Resources:
 
@@ -270,8 +270,8 @@ Resources:
       SecurityGroups:
       - !Ref SecurityGroup
       SubnetId: !Select [ 1, !Ref Subnet ]
-  ElasticFileSystemMountTarget2:
-    Condition: Subnet2
+  ElasticFileSystemMountTarget3a:
+    Condition: Subnet3a
     Type: AWS::EFS::MountTarget
     Properties:
       FileSystemId: !Ref ElasticFileSystem
