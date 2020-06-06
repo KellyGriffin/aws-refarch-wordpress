@@ -252,17 +252,6 @@ Parameters:
     AllowedValues:
       - db.t3.small
       - db.t3.medium
-      - db.r3.large
-      - db.r3.xlarge
-      - db.r3.2xlarge
-      - db.r3.4xlarge
-      - db.r3.8xlarge
-      - db.r4.large
-      - db.r4.xlarge
-      - db.r4.2xlarge
-      - db.r4.4xlarge
-      - db.r4.8xlarge
-      - db.r4.16xlarge
     ConstraintDescription: Must be a valid RDS instance class.
     Default: db.t3.small
     Description: The Amazon RDS database instance class.
@@ -311,7 +300,7 @@ Parameters:
     AllowedValues:
       - true
       - false
-    Default: false
+    Default: true
     Description: Create an encrypted Amazon EFS file system.
     Type: String
   EfsCmk:
@@ -398,9 +387,8 @@ Parameters:
     Description: The version of PHP to install.
     Type: String 
   PublicAlbAcmCertificate:
-    AllowedPattern: ^$|(arn:aws:acm:)([a-z0-9/:-])*([a-z0-9])$
     Description: '[ Optional ] The AWS Certification Manager certificate ARN for the ALB certificate - this certificate should be created in the region you wish to run the ALB and must reference the WordPress domain name you use below.'
-    Type: String
+    Type: AWS::CertificateManager::Certificate
   SshAccessCidr:
     AllowedPattern: ^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])(\/([0-9]|[1-2][0-9]|3[0-2]))$
     Description: The CIDR IP range that is permitted to SSH to bastion instance. Note - a value of 0.0.0.0/0 will allow access from ANY IP address.

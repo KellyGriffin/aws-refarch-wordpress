@@ -67,21 +67,21 @@ Parameters:
     Type: Number
   InstanceType:
     AllowedValues:
-    - t3.nano 
-    - t3.micro 
-    - t3.small 
-    - t3.medium 
-    - t3.large 
-    - t3.xlarge 
-    - t3.2xlarge 
-    - m5.large 
-    - m5.xlarge 
-    - m5.2xlarge 
-    - m5.4xlarge 
-    - m5.12xlarge 
-    - m5.24xlarge 
+    - t3a.nano 
+    - t3a.micro 
+    - t3a.small 
+    - t3a.medium 
+    - t3a.large 
+    - t3a.xlarge 
+    - t3a.2xlarge 
+    - m5a.large 
+    - m5a.xlarge 
+    - m5a.2xlarge 
+    - m5a.4xlarge 
+    - m5a.12xlarge 
+    - m5a.24xlarge 
     ConstraintDescription: Must be a valid Amazon EC2 instance type.
-    Default: r4.large
+    Default: t3a.nano
     Description: The Amazon EC2 instance type that adds data to the file system.
     Type: String
   EC2KeyName:
@@ -103,12 +103,6 @@ Parameters:
       - maxIO
     Default: generalPurpose
     Description: Select the performance mode of the file system.
-    Type: String
-  EfsCopyDataFrom:
-    Description: Clone EFS from existing EFS
-    Type: String
-  WPDirectory:
-    Description: Wordpress directory
     Type: String
   SecurityGroup:
     Description: Select the Amazon EFS security group.
@@ -462,7 +456,7 @@ Resources:
             "- yum --enablerepo=epel install nload -y\n",
             "- ntpstat\n",
             "- /opt/aws/bin/cfn-init --configsets efs_add_storage --verbose --stack ", !Ref 'AWS::StackName', " --resource LaunchConfiguration --region ", !Ref 'AWS::Region',"\n",
-            "- /tmp/efs-add-storage.sh ", !Ref ElasticFileSystem, " throughput_data ", !Ref Growth, " ", !Ref EfsCopyDataFrom, " ", !Ref WPDirectory, "\n",
+            "- /tmp/efs-add-storage.sh ", !Ref ElasticFileSystem, " throughput_data ", !Ref Growth, "\n",
             "- /opt/aws/bin/cfn-signal -e $? --stack ", !Ref 'AWS::StackName', " --resource AutoScalingGroup --region ", !Ref 'AWS::Region',"\n"
             ]
           ]
