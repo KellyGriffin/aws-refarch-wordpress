@@ -39,7 +39,7 @@ You can launch this CloudFormation stack, using your account, in the following A
 | us-west-2 |US West (Oregon)| [![cloudformation-launch-stack](images/cloudformation-launch-stack.png)](https://console.aws.amazon.com/cloudformation/home?region=us-west-2#/stacks/new?stackName=WordPress&templateURL=https://s3.amazonaws.com/aws-refarch/wordpress/latest/templates/aws-refarch-wordpress-master-newvpc.yaml) |
 | eu-west-1 |EU (Ireland)| [![cloudformation-launch-stack](images/cloudformation-launch-stack.png)](https://console.aws.amazon.com/cloudformation/home?region=eu-west-1#/stacks/new?stackName=WordPress&templateURL=https://s3.amazonaws.com/aws-refarch/wordpress/latest/templates/aws-refarch-wordpress-master-newvpc.yaml) |
 | eu-central-1 |EU (Frankfurt)| [![cloudformation-launch-stack](images/cloudformation-launch-stack.png)](https://console.aws.amazon.com/cloudformation/home?region=eu-central-1#/stacks/new?stackName=WordPress&templateURL=https://s3.amazonaws.com/aws-refarch/wordpress/latest/templates/aws-refarch-wordpress-master-newvpc.yaml) |
-| ap-southeast-2 |AP (Sydney)| [![cloudformation-launch-stack](images/cloudformation-launch-stack.png)](https://console.aws.amazon.com/cloudformation/home?region=ap-southeast-2#/stacks/new?stackName=WordPress&templateURL=https://s3.amazonaws.com/aws-refarch/wordpress/latest/templates/aws-refarch-wordpress-master-newvpc.yaml) |
+| ap-southeast-2 |AP (Sydney)| [![cloudformation-launch-stack](images/cloudformation-launch-stack.png)](https://console.aws.amazon.com/cloudformation/home?region=ap-southeast-2#/stacks/new?stackName=WordPress&templateURL=https://raw.githubusercontent.com/davesc63/aws-refarch-wordpress/master/templates/aws-refarch-wordpress-master-newvpc.yaml) |
 
 #### Select WordPress version
 
@@ -226,7 +226,7 @@ Review the template here [aws-refarch-wordpress-master.yaml](templates/aws-refar
 #### Web Parameters
 - Create CloudFront distribution (boolean)
 - Create Route 53 record set (boolean)
-- PHP Version (5.5, 5.6, or 7.0 - recomended)
+- PHP Version (5.5, 5.6, 7.0, or 7.3 - recomended)
 - Web Instance Type
 - The maximum number of instances in the web tier auto scaling group
 - The minimum (and desired) number of instances in the web tier auto scaling group
@@ -251,25 +251,25 @@ The 'newvpc' stack defaults to the following network design (but these can be ch
 
 | Item | CIDR Range | Usable IPs | Description |
 | --- | --- | --- | --- |
-| VPC | 10.0.0.0/16 | 65,536 | The whole range used for the VPC and all subnets |
-| Web Subnet | 10.0.0.0/22 | 1022 | Private subnet in first Availability Zone |
-| Web Subnet | 10.0.4.0/22 | 1022 | Private subnet in second Availability Zone |
-| Web Subnet | 10.0.8.0/22 | 1022 | Private subnet in third Availability Zone |
-| Web Subnet | 10.0.12.0/22 | 1022 | Private subnet in fourth Availability Zone |
-| Web Subnet | 10.0.16.0/22 | 1022 | Private subnet in fifth Availability Zone |
-| Web Subnet | 10.0.20.0/22 | 1022 | Private subnet in sixth Availability Zone |
-| Data Subnet | 10.0.100.0/24 | 254 | Private subnet in first Availability Zone |
-| Data Subnet | 10.0.101.0/24 | 254 | Private subnet in second Availability Zone |
-| Data Subnet | 10.0.102.0/24 | 254 | Private subnet in third Availability Zone |
-| Data Subnet | 10.0.103.0/24 | 254 | Private subnet in fourth Availability Zone |
-| Data Subnet | 10.0.104.0/24 | 254 | Private subnet in fifth Availability Zone |
-| Data Subnet | 10.0.105.0/24 | 254 | Private subnet in sixth Availability Zone |
-| Public Subnet | 10.0.200.0/24 | 254 | Public subnet in first Availability Zone |
-| Public Subnet | 10.0.201.0/24 | 254 | Public subnet in second Availability Zone |
-| Public Subnet | 10.0.202.0/24 | 254 | Public subnet in third Availability Zone |
-| Public Subnet | 10.0.203.0/24 | 254 | Public subnet in fourth Availability Zone |
-| Public Subnet | 10.0.204.0/24 | 254 | Public subnet in fifth Availability Zone |
-| Public Subnet | 10.0.205.0/24 | 254 | Public subnet in sixth Availability Zone |
+| VPC | 10.1.0.0/16 | 65,536 | The whole range used for the VPC and all subnets |
+| Web Subnet | 10.1.0.0/22 | 1022 | Private subnet in first Availability Zone |
+| Web Subnet | 10.1.4.0/22 | 1022 | Private subnet in second Availability Zone |
+| Web Subnet | 10.1.8.0/22 | 1022 | Private subnet in third Availability Zone |
+| Web Subnet | 10.1.12.0/22 | 1022 | Private subnet in fourth Availability Zone |
+| Web Subnet | 10.1.16.0/22 | 1022 | Private subnet in fifth Availability Zone |
+| Web Subnet | 10.1.20.0/22 | 1022 | Private subnet in sixth Availability Zone |
+| Data Subnet | 10.1.100.0/24 | 254 | Private subnet in first Availability Zone |
+| Data Subnet | 10.1.101.0/24 | 254 | Private subnet in second Availability Zone |
+| Data Subnet | 10.1.102.0/24 | 254 | Private subnet in third Availability Zone |
+| Data Subnet | 10.1.103.0/24 | 254 | Private subnet in fourth Availability Zone |
+| Data Subnet | 10.1.104.0/24 | 254 | Private subnet in fifth Availability Zone |
+| Data Subnet | 10.1.105.0/24 | 254 | Private subnet in sixth Availability Zone |
+| Public Subnet | 10.1.200.0/24 | 254 | Public subnet in first Availability Zone |
+| Public Subnet | 10.1.201.0/24 | 254 | Public subnet in second Availability Zone |
+| Public Subnet | 10.1.202.0/24 | 254 | Public subnet in third Availability Zone |
+| Public Subnet | 10.1.203.0/24 | 254 | Public subnet in fourth Availability Zone |
+| Public Subnet | 10.1.204.0/24 | 254 | Public subnet in fifth Availability Zone |
+| Public Subnet | 10.1.205.0/24 | 254 | Public subnet in sixth Availability Zone |
 
 ## Security Groups Template
 Review the template here [aws-refarch-wordpress-02-securitygroups.yaml](templates/aws-refarch-wordpress-02-securitygroups.yaml)
