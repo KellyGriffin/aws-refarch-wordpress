@@ -32,19 +32,19 @@ Metadata:
         - VpcTenancy
         - PublicSubnet0Cidr
         - PublicSubnet1Cidr
-        - PublicSubnet3aCidr
+        - PublicSubnet3Cidr
         - PublicSubnet3Cidr
         - PublicSubnet4Cidr
         - PublicSubnet5Cidr
         - WebSubnet0Cidr
         - WebSubnet1Cidr
-        - WebSubnet3aCidr
+        - WebSubnet3Cidr
         - WebSubnet3Cidr
         - WebSubnet4Cidr
         - WebSubnet5Cidr
         - DataSubnet0Cidr
         - DataSubnet1Cidr
-        - DataSubnet3aCidr
+        - DataSubnet3Cidr
         - DataSubnet3Cidr
         - DataSubnet4Cidr
         - DataSubnet5Cidr
@@ -180,7 +180,7 @@ Metadata:
         default: Public Subnet 0
       PublicSubnet1Cidr:
         default: Public Subnet 1
-      PublicSubnet3aCidr:
+      PublicSubnet3Cidr:
         default: Public Subnet 2
       PublicSubnet3Cidr:
         default: Public Subnet 3
@@ -192,7 +192,7 @@ Metadata:
         default: Web Subnet 0
       WebSubnet1Cidr:
         default: Web Subnet 1
-      WebSubnet3aCidr:
+      WebSubnet3Cidr:
         default: Web Subnet 2
       WebSubnet3Cidr:
         default: Web Subnet 3
@@ -204,7 +204,7 @@ Metadata:
         default: Data Subnet 0
       DataSubnet1Cidr:
         default: Data Subnet 1
-      DataSubnet3aCidr:
+      DataSubnet3Cidr:
         default: Data Subnet 2
       DataSubnet3Cidr:
         default: Data Subnet 3
@@ -264,7 +264,7 @@ Parameters:
       - db.r4.8xlarge
       - db.r4.16xlarge
     ConstraintDescription: Must be a valid RDS instance class.
-    Default: db.t3a.medium
+    Default: db.t3a.small
     Description: The Amazon RDS database instance class.
     Type: String
   DatabaseMasterUsername:
@@ -273,6 +273,7 @@ Parameters:
     ConstraintDescription: Must contain only alphanumeric characters (minimum 8; maximum 16).
     MaxLength: 16
     MinLength: 8
+    Default: wpdbadmin
     Type: String
   DatabaseMasterPassword:
     AllowedPattern: ^([a-zA-Z0-9`~!#$%^&*()_+,\\-])*$
@@ -285,6 +286,7 @@ Parameters:
   DatabaseName:
     AllowedPattern: ^([a-zA-Z0-9]*)$
     Description: The Amazon RDS master database name.
+    Default: octank
     Type: String
   EfsAlarmsInstanceType:
     AllowedValues:
@@ -375,7 +377,7 @@ Parameters:
       - cache.t3.small
       - cache.t3.medium
     ConstraintDescription: Must be a valid Amazon ElastiCache node type.
-    Default: cache.t3.medium
+    Default: cache.t3.small
     Description: The Amazon ElastiCache cluster node type.
     Type: String
   EC2KeyName:
@@ -384,6 +386,7 @@ Parameters:
     Type: AWS::EC2::KeyPair::KeyName
   PHPIniOverride:
     Description: Full Amazon S3 https path to a php.ini override file (e.g. https://s3.amazonaws.com/aws-refarch/wordpress/latest/bits/20-aws.ini)
+    Default: https://s3.amazonaws.com/aws-refarch/wordpress/latest/bits/20-aws.ini
     Type: String
   PHPVersion:
     AllowedValues:
@@ -427,13 +430,13 @@ Parameters:
   WebAsgMax:
     AllowedPattern: ^((?!0$)[1-2]?[0-9]|30)$
     ConstraintDescription: Must be a number between 1 and 30.
-    Default: 4
+    Default: 6
     Description: Specifies the maximum number of EC2 instances in the Web Autoscaling Group.
     Type: String
   WebAsgMin:
     AllowedPattern: ^([0-0]?[0-9]|10)$
     ConstraintDescription: Must be a number between 0 and 10.
-    Default: 2
+    Default: 1
     Description: Specifies the minimum number of EC2 instances in the Web Autoscaling Group.
     Type: String
   WebInstanceType:
@@ -452,12 +455,13 @@ Parameters:
       - m5a.12xlarge 
       - m5a.24xlarge 
     ConstraintDescription: Must be a valid Amazon EC2 instance type.
-    Default: t3a.large
+    Default: t3a.nano
     Description: The Amazon EC2 instance type for your web instances.
     Type: String
   AdminEmail:
     AllowedPattern: ^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$
     Description: The admin email address for WordPress and AWS notifications.
+    Default: gov@amazon.com
     Type: String
   WPAdminPassword:
     AllowedPattern: ^([a-zA-Z0-9`~!#$%^&*()_+,\\-])*$
@@ -468,14 +472,17 @@ Parameters:
   WPAdminUsername:
     AllowedPattern: ^([a-zA-Z0-9])([a-zA-Z0-9_-])*([a-zA-Z0-9])$
     Description: The WordPress admin username.
+    Default: wpadmin
     Type: String
   WPDirectory:
     AllowedPattern: ^([a-zA-Z0-9])([a-zA-Z0-9_-])*([a-zA-Z0-9])$
     Description: The WordPress site directory.
+    Default: octank
     Type: String
   WPDomainName:
     AllowedPattern: ^$|(([a-zA-Z0-9]|[a-zA-Z0-9][a-zA-Z0-9\-]*[a-zA-Z0-9])\.)*([A-Za-z0-9]|[A-Za-z0-9][A-Za-z0-9\-]*[A-Za-z0-9])$
     Description: '[ Optional ] The main domain name of the WordPress site (e.g. example.com).'
+    Default: gov.sa.aws.dev
     Type: String
   WPLocale:
     Description: "The main language of the WordPress site, as per https://codex.WordPress.org/Installing_WordPress_in_Your_Language. The default is 'en_GB'."
@@ -526,7 +533,7 @@ Parameters:
     Default: 10.1.101.0/24
     Description: CIDR block for data subnet 1 located in Availability Zone 1
     Type: String
-  DataSubnet3aCidr:
+  DataSubnet3Cidr:
     AllowedPattern: "^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])(\\/(1[6-9]|2[0-8]))$"
     ConstraintDescription: CIDR block parameter must be in the form x.x.x.x/16-28
     Default: 10.1.102.0/24
@@ -562,7 +569,7 @@ Parameters:
     Default: 10.1.201.0/24
     Description: CIDR block for Public subnet 1 located in Availability Zone 1
     Type: String
-  PublicSubnet3aCidr:
+  PublicSubnet3Cidr:
     AllowedPattern: "^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])(\\/(1[6-9]|2[0-8]))$"
     ConstraintDescription: CIDR block parameter must be in the form x.x.x.x/16-28
     Default: 10.1.202.0/24
@@ -598,7 +605,7 @@ Parameters:
     Default: 10.1.4.0/22
     Description: CIDR block for Web subnet 1 located in Availability Zone 1
     Type: String
-  WebSubnet3aCidr:
+  WebSubnet3Cidr:
     AllowedPattern: "^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])(\\/(1[6-9]|2[0-8]))$"
     ConstraintDescription: CIDR block parameter must be in the form x.x.x.x/16-28
     Default: 10.1.8.0/22
@@ -678,7 +685,7 @@ Resources:
           !Ref NumberOfAZs
         Subnet:
           !GetAtt [ newvpc, Outputs.PublicSubnet ]
-      TemplateURL: https://raw.githubusercontent.com/davesc63/aws-refarch-wordpress/master/templates/aws-refarch-wordpress-03-bastion.yaml
+      TemplateURL: https://octank-ref-arch.s3-ap-southeast-2.amazonaws.com/templates/aws-refarch-wordpress-03-bastion.yaml
   cloudfront:
     Condition: DeployCloudFront
     DependsOn: [ publicalb, web ]
@@ -691,7 +698,7 @@ Resources:
           !GetAtt [ publicalb, Outputs.PublicAlbDnsName ]
         WPDomainName:
           !Ref WPDomainName
-      TemplateURL: https://raw.githubusercontent.com/davesc63/aws-refarch-wordpress/master/templates/aws-refarch-wordpress-04-cloudfront.yaml
+      TemplateURL: https://octank-ref-arch.s3-ap-southeast-2.amazonaws.com/templates/aws-refarch-wordpress-04-cloudfront.yaml
   dashboardwithalarms:
     Condition: EfsCreateAlarms
     DependsOn: [ newvpc, securitygroups, publicalb, efsfilesystem, rds, efsalarms ]
@@ -714,7 +721,7 @@ Resources:
           !GetAtt [ publicalb, Outputs.PublicAlbFullName ]
         EfsCreateAlarms:
           !Ref EfsCreateAlarms         
-      TemplateURL: https://raw.githubusercontent.com/davesc63/aws-refarch-wordpress/master/templates/aws-refarch-wordpress-06-dashboard.yaml
+      TemplateURL: https://octank-ref-arch.s3-ap-southeast-2.amazonaws.com/templates/aws-refarch-wordpress-06-dashboard.yaml
   dashboardwithnoalarms:
     Condition: EfsCreateNoAlarms
     DependsOn: [ newvpc, securitygroups, publicalb, efsfilesystem, rds ]
@@ -729,7 +736,7 @@ Resources:
           !GetAtt [ publicalb, Outputs.PublicAlbFullName ]
         EfsCreateAlarms:
           !Ref EfsCreateAlarms         
-      TemplateURL: https://raw.githubusercontent.com/davesc63/aws-refarch-wordpress/master/templates/aws-refarch-wordpress-06-dashboard.yaml
+      TemplateURL: https://octank-ref-arch.s3-ap-southeast-2.amazonaws.com/templates/aws-refarch-wordpress-06-dashboard.yaml
   efsfilesystem:
     DependsOn: [ newvpc, securitygroups ]
     Type: AWS::CloudFormation::Stack
@@ -753,7 +760,7 @@ Resources:
           !Ref EfsPerformanceMode
         Subnet:
           !GetAtt [ newvpc, Outputs.DataSubnet ]
-      TemplateURL: https://raw.githubusercontent.com/davesc63/aws-refarch-wordpress/master/templates/aws-refarch-wordpress-03-efsfilesystem.yaml
+      TemplateURL: https://octank-ref-arch.s3-ap-southeast-2.amazonaws.com/templates/aws-refarch-wordpress-03-efsfilesystem.yaml
   efsalarms:
     Condition: EfsCreateAlarms
     DependsOn: [ efsfilesystem ]
@@ -778,7 +785,7 @@ Resources:
           !GetAtt [ newvpc, Outputs.DataSubnet ]
         WarningThreshold:
           !Ref EfsWarningThreshold
-      TemplateURL: https://raw.githubusercontent.com/davesc63/aws-refarch-wordpress/master/templates/aws-refarch-wordpress-03-efsalarms.yaml
+      TemplateURL: https://octank-ref-arch.s3-ap-southeast-2.amazonaws.com/templates/aws-refarch-wordpress-03-efsalarms.yaml
   elasticache:
     Condition: DeployElastiCache
     DependsOn: [ newvpc, securitygroups ]
@@ -793,7 +800,7 @@ Resources:
           !GetAtt [ securitygroups, Outputs.ElastiCacheSecurityGroup ]
         NumberOfSubnets:
           !Ref NumberOfAZs
-      TemplateURL: https://raw.githubusercontent.com/davesc63/aws-refarch-wordpress/master/templates/aws-refarch-wordpress-03-elasticache.yaml
+      TemplateURL: https://octank-ref-arch.s3-ap-southeast-2.amazonaws.com/templates/aws-refarch-wordpress-03-elasticache.yaml
   newvpc:
     Type: AWS::CloudFormation::Stack
     Properties:
@@ -812,8 +819,8 @@ Resources:
           !Ref PublicSubnet0Cidr
         PublicSubnet1Cidr:
           !Ref PublicSubnet1Cidr
-        PublicSubnet3aCidr:
-          !Ref PublicSubnet3aCidr
+        PublicSubnet3Cidr:
+          !Ref PublicSubnet3Cidr
         PublicSubnet3Cidr:
           !Ref PublicSubnet3Cidr
         PublicSubnet4Cidr:
@@ -824,8 +831,8 @@ Resources:
           !Ref WebSubnet0Cidr
         WebSubnet1Cidr:
           !Ref WebSubnet1Cidr
-        WebSubnet3aCidr:
-          !Ref WebSubnet3aCidr
+        WebSubnet3Cidr:
+          !Ref WebSubnet3Cidr
         WebSubnet3Cidr:
           !Ref WebSubnet3Cidr
         WebSubnet4Cidr:
@@ -836,15 +843,15 @@ Resources:
           !Ref DataSubnet0Cidr
         DataSubnet1Cidr:
           !Ref DataSubnet1Cidr
-        DataSubnet3aCidr:
-          !Ref DataSubnet3aCidr
+        DataSubnet3Cidr:
+          !Ref DataSubnet3Cidr
         DataSubnet3Cidr:
           !Ref DataSubnet3Cidr
         DataSubnet4Cidr:
           !Ref DataSubnet4Cidr
         DataSubnet5Cidr:
           !Ref DataSubnet5Cidr
-      TemplateURL: https://raw.githubusercontent.com/davesc63/aws-refarch-wordpress/master/templates/aws-refarch-wordpress-01-newvpc.yaml
+      TemplateURL: https://octank-ref-arch.s3-ap-southeast-2.amazonaws.com/templates/aws-refarch-wordpress-01-newvpc.yaml
   publicalb:
     Condition: AvailableAWSRegion
     DependsOn: [ newvpc, securitygroups ]
@@ -861,7 +868,7 @@ Resources:
           !GetAtt [ securitygroups, Outputs.PublicAlbSecurityGroup ]
         Vpc:
           !GetAtt [ newvpc, Outputs.Vpc ]
-      TemplateURL: https://raw.githubusercontent.com/davesc63/aws-refarch-wordpress/master/templates/aws-refarch-wordpress-03-publicalb.yaml
+      TemplateURL: https://octank-ref-arch.s3-ap-southeast-2.amazonaws.com/templates/aws-refarch-wordpress-03-publicalb.yaml
   rds:
     Condition: AvailableAWSRegion
     DependsOn: [ newvpc, securitygroups ]
@@ -886,7 +893,7 @@ Resources:
           !GetAtt [ newvpc, Outputs.DataSubnet ]
         NumberOfSubnets:
           !Ref NumberOfAZs
-      TemplateURL: https://raw.githubusercontent.com/davesc63/aws-refarch-wordpress/master/templates/aws-refarch-wordpress-03-rds.yaml
+      TemplateURL: https://octank-ref-arch.s3-ap-southeast-2.amazonaws.com/templates/aws-refarch-wordpress-03-rds.yaml
   route53:
     Condition: CreateRecordSet
     DependsOn: [ publicalb, web ]
@@ -899,7 +906,7 @@ Resources:
           !If [ DeployCloudFront, 'Z2FDTNDATAQYW2', !GetAtt [ publicalb, Outputs.PublicAlbCanonicalHostedZoneId ] ]
         WPDomainName:
           !Ref WPDomainName
-      TemplateURL: https://raw.githubusercontent.com/davesc63/aws-refarch-wordpress/master/templates/aws-refarch-wordpress-05-route53.yaml
+      TemplateURL: https://octank-ref-arch.s3-ap-southeast-2.amazonaws.com/templates/aws-refarch-wordpress-05-route53.yaml
   securitygroups:
     Condition: AvailableAWSRegion
     DependsOn: newvpc
@@ -910,7 +917,7 @@ Resources:
           !Ref SshAccessCidr
         Vpc:
           !GetAtt [ newvpc, Outputs.Vpc ]
-      TemplateURL: https://raw.githubusercontent.com/davesc63/aws-refarch-wordpress/master/templates/aws-refarch-wordpress-02-securitygroups.yaml
+      TemplateURL: https://octank-ref-arch.s3-ap-southeast-2.amazonaws.com/templates/aws-refarch-wordpress-02-securitygroups.yaml
   web:
     Condition: AvailableAWSRegion
     DependsOn: [ efsfilesystem, newvpc, publicalb, securitygroups ]
@@ -967,7 +974,7 @@ Resources:
           !Ref WPTitle
         WPVersion:
           !Ref WPVersion
-      TemplateURL: https://raw.githubusercontent.com/davesc63/aws-refarch-wordpress/master/templates/aws-refarch-wordpress-04-web.yaml
+      TemplateURL: https://octank-ref-arch.s3-ap-southeast-2.amazonaws.com/templates/aws-refarch-wordpress-04-web.yaml
 
 Outputs:
 
