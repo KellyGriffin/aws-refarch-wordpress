@@ -128,7 +128,7 @@ Resources:
           Id: elb
           CustomOriginConfig:
             OriginProtocolPolicy: http-only
-        PriceClass: PriceClass_all
+        PriceClass: PriceClass_All
   CloudFrontDistributionSslCertificate:
     Type: AWS::CloudFront::Distribution
     Condition: SslCertificate
@@ -203,7 +203,7 @@ Resources:
           Id: elb
           CustomOriginConfig:
             OriginProtocolPolicy: https-only
-        PriceClass: PriceClass_all
+        PriceClass: PriceClass_All
         ViewerCertificate:
           AcmCertificateArn: !Ref CloudFrontAcmCertificate
           SslSupportMethod: sni-only
